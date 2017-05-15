@@ -11,7 +11,7 @@ public class Startup
     app.Run(context =>
     {
        string connectionString =
-            "Server=localhost;Database=demo;User Id=SA;Password=zVvbPSB5uUqm";
+            "Server=52.174.147.25;Database=demo;User Id=SA;Password=zVvbPSB5uUqm";
         String result="";
         //
         // In a using statement, acquire the SqlConnection as a resource.
