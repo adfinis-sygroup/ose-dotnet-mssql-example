@@ -10,34 +10,35 @@ public class Startup
   {
     app.Run(context =>
     {
-       string connectionString =
-            "Server=10.0.0.7;Database=demo;User Id=SA;Password=zVvbPSB5uUqm";
-        String result="";
+      string connectionString =
+      "Server=10.0.0.7;Database=demo;User Id=SA;Password=zVvbPSB5uUqm";
+      String result="";
+      //
+      // In a using statement, acquire the SqlConnection as a resource.
+      //
+      using (SqlConnection con = new SqlConnection(connectionString))
+      {
         //
-        // In a using statement, acquire the SqlConnection as a resource.
+        // Open the SqlConnection.
         //
-        using (SqlConnection con = new SqlConnection(connectionString))
+        con.Open();
+        //
+        // The following code uses an SqlCommand based on the SqlConnection.
+        //
+        //string result = "";
+        using (SqlCommand command = new SqlCommand("SELECT * FROM customers;", con))
+        using (SqlDataReader reader = command.ExecuteReader())
         {
-            //
-            // Open the SqlConnection.
-            //
-            con.Open();
-            //
-            // The following code uses an SqlCommand based on the SqlConnection.
-            //
-            //string result = "";
-            using (SqlCommand command = new SqlCommand("SELECT * FROM customers;", con))
-            using (SqlDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    result += string.Format("{0} {1} {2}<br>",
-                        reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
-                }
-            }
+          while (reader.Read())
+          {
+            result += string.Format("{0} {1} {2}<br>",
+            reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
+          }
         }
+      }
 
+      context.Response.ContentType = "text/html";
       return context.Response.WriteAsync(result);
-    });
+      });
+    }
   }
-}
