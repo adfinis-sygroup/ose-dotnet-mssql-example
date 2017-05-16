@@ -31,8 +31,10 @@ public class Startup
         {
           while (reader.Read())
           {
-            result += string.Format("{0} {1} {2}<br>",
-            reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
+            result += "<table>";
+            result += string.Format("<tr><td>{0}</td> <td>{1}</td> <td>{2}</td></tr>",
+                reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
+            result += "</table>";
           }
         }
       }
